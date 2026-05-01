@@ -1,0 +1,471 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#04040a;
+  --deep:#08081a;
+  --card:#0d0d20;
+  --line:#1c1c3a;
+  --mute:#36365a;
+  --dim:#5a5a8a;
+  --mid:#8888b8;
+  --soft:#b8b8d8;
+  --light:#e8e8f8;
+  --white:#f4f2ff;
+  --purple:#7c6af7;
+  --purple2:#a897ff;
+  --purple3:#2d1b69;
+  --green:#39d98a;
+  --accent:#ff6b6b;
+}
+body,html{margin:0;padding:0}
+.pf{background:var(--black);color:var(--soft);font-family:'IBM Plex Mono',monospace;overflow-x:hidden;line-height:1.6}
+
+/* LANG BAR */
+.lang-bar{position:sticky;top:0;z-index:200;background:rgba(4,4,10,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:10px 2rem;display:flex;justify-content:space-between;align-items:center}
+.lang-logo{font-family:'Syne',sans-serif;font-size:13px;font-weight:800;color:var(--purple);letter-spacing:0.08em}
+.lang-btns{display:flex;gap:6px;align-items:center}
+.lang-sep{font-size:10px;color:var(--mute)}
+.lb{background:transparent;border:1px solid var(--line);color:var(--dim);font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.14em;padding:5px 14px;cursor:pointer;transition:all 0.2s;border-radius:2px}
+.lb.on{background:var(--purple);border-color:var(--purple);color:#fff}
+.lb:hover:not(.on){border-color:var(--purple);color:var(--light)}
+
+/* HERO */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);min-height:520px;display:flex;flex-direction:column;justify-content:flex-end}
+.hero-canvas{position:absolute;inset:0}
+.hero-content{position:relative;z-index:2;padding:4rem 2.5rem 3rem}
+
+.status-pill{display:inline-flex;align-items:center;gap:8px;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--dim);margin-bottom:2.5rem}
+.pulse{width:7px;height:7px;border-radius:50%;background:var(--green);position:relative}
+.pulse::after{content:'';position:absolute;inset:-3px;border-radius:50%;border:1px solid var(--green);animation:ripple 2s ease-out infinite;opacity:0}
+@keyframes ripple{0%{transform:scale(0.8);opacity:0.6}100%{transform:scale(1.8);opacity:0}}
+
+.hero-name{font-family:'Syne',sans-serif;font-size:clamp(3rem,11vw,7.5rem);font-weight:800;line-height:0.92;letter-spacing:-0.03em;color:var(--white);margin-bottom:0.5rem}
+.hero-name .stroke{-webkit-text-stroke:1px var(--purple);color:transparent}
+.hero-subtitle{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1.2rem,3.5vw,2.2rem);color:var(--purple2);margin-bottom:2rem;letter-spacing:0.01em}
+
+.hero-desc{font-size:11px;color:var(--dim);line-height:2;max-width:420px;margin-bottom:2.5rem}
+.hero-desc span{color:var(--purple)}
+
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.hbtn-main{background:var(--purple);color:#fff;border:none;padding:11px 26px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.05em;cursor:pointer;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,0 100%);transition:background 0.2s;text-decoration:none;display:inline-block}
+.hbtn-main:hover{background:#6a58e0}
+.hbtn-ghost{background:transparent;color:var(--dim);border:1px solid var(--line);padding:11px 26px;font-family:'IBM Plex Mono',monospace;font-size:11px;cursor:pointer;letter-spacing:0.08em;transition:all 0.2s;border-radius:2px;text-decoration:none;display:inline-block}
+.hbtn-ghost:hover{border-color:var(--purple);color:var(--light)}
+
+.hero-corner{position:absolute;bottom:2rem;right:2.5rem;z-index:2;text-align:right;font-size:10px;color:var(--mute);letter-spacing:0.1em;line-height:2}
+
+/* MARQUEE */
+.marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:12px 0;overflow:hidden;background:var(--deep)}
+.mq-inner{display:inline-flex;gap:0;animation:mq 22s linear infinite;white-space:nowrap}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.mq-item{font-size:10px;letter-spacing:0.16em;text-transform:uppercase;padding:0 2.5rem;color:var(--mute);display:flex;align-items:center;gap:10px}
+.mq-dot{width:3px;height:3px;border-radius:50%;background:var(--purple);flex-shrink:0}
+
+/* ABOUT BAR */
+.about-bar{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:1px solid var(--line)}
+.ab-cell{padding:1.75rem 2rem;border-right:1px solid var(--line);position:relative;overflow:hidden;transition:background 0.3s}
+.ab-cell:last-child{border-right:none}
+.ab-cell:hover{background:rgba(124,106,247,0.04)}
+.ab-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--purple);line-height:1;margin-bottom:4px}
+.ab-lbl{font-size:9px;color:var(--mute);letter-spacing:0.14em;text-transform:uppercase}
+.ab-cell::before{content:'';position:absolute;top:0;left:0;width:2px;height:0;background:var(--purple);transition:height 0.4s ease}
+.ab-cell:hover::before{height:100%}
+
+/* SKILLS + EXP */
+.mid-grid{display:grid;grid-template-columns:1.1fr 0.9fr;border-bottom:1px solid var(--line)}
+.mg-left{padding:2.5rem;border-right:1px solid var(--line)}
+.mg-right{padding:2.5rem}
+
+.sec-label{font-size:9px;letter-spacing:0.2em;color:var(--mute);text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-bottom:2rem}
+.sec-label::after{content:'';flex:1;height:1px;background:var(--line)}
+
+.skill-row{margin-bottom:1.4rem}
+.sk-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.sk-name{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;color:var(--light);letter-spacing:0.03em}
+.sk-val{font-size:10px;color:var(--dim)}
+.sk-track{height:1px;background:var(--line);position:relative}
+.sk-fill{height:1px;background:linear-gradient(90deg,var(--purple3),var(--purple));position:absolute;top:0;left:0;transition:width 1.2s ease}
+.sk-glow{position:absolute;right:0;top:-2px;width:4px;height:5px;background:var(--purple2);border-radius:50%;filter:blur(2px)}
+
+.exp-item{margin-bottom:1.6rem;padding-bottom:1.6rem;border-bottom:1px solid rgba(28,28,58,0.8)}
+.exp-item:last-child{border-bottom:none;padding-bottom:0;margin-bottom:0}
+.exp-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px}
+.exp-co{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--white)}
+.exp-yr{font-size:9px;color:var(--mute);letter-spacing:0.08em;margin-top:2px}
+.exp-role{font-size:10px;color:var(--purple2);letter-spacing:0.06em;margin-bottom:3px}
+.exp-note{font-size:10px;color:var(--dim);line-height:1.6}
+
+.award{display:flex;align-items:center;gap:10px;background:rgba(124,106,247,0.08);border:1px solid rgba(124,106,247,0.2);padding:10px 14px;margin-top:1.5rem;border-radius:2px}
+.award-icon{width:24px;height:24px;background:var(--purple);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;border-radius:2px}
+.award-txt{font-size:11px;color:var(--purple2);letter-spacing:0.06em;line-height:1.5}
+
+/* PROJECTS */
+.proj-section{border-bottom:1px solid var(--line)}
+.proj-header{padding:2rem 2.5rem 1.5rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}
+.proj-grid{display:grid;grid-template-columns:1fr 1fr}
+.proj-card{padding:2.5rem;border-right:1px solid var(--line);border-bottom:1px solid var(--line);position:relative;overflow:hidden;cursor:pointer;transition:background 0.3s;text-decoration:none;color:inherit;display:block}
+.proj-card:nth-child(2n){border-right:none}
+.proj-card:nth-last-child(-n+2){border-bottom:none}
+.proj-card:hover{background:rgba(124,106,247,0.05)}
+.proj-num{font-family:'Syne',sans-serif;font-size:4rem;font-weight:800;color:var(--line);line-height:1;margin-bottom:1rem;transition:color 0.3s;letter-spacing:-0.05em}
+.proj-card:hover .proj-num{color:rgba(124,106,247,0.25)}
+.proj-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--white);margin-bottom:0.5rem;letter-spacing:0.01em}
+.proj-body{font-size:10px;color:var(--dim);line-height:1.8;margin-bottom:1rem}
+.proj-proof{font-size:9.5px;color:var(--mid);line-height:1.75;margin-bottom:1rem;padding-left:0;list-style:none}
+.proj-proof li{margin-bottom:3px}
+.proj-proof li::before{content:'✓';color:var(--green);margin-right:8px}
+.proj-tags{display:flex;gap:6px;flex-wrap:wrap}
+.github-link{display:inline-flex;margin-top:1rem;font-size:9px;color:var(--purple2);letter-spacing:0.12em;text-transform:uppercase;border-bottom:1px solid rgba(168,151,255,0.35);padding-bottom:2px}
+.proj-card:hover .github-link{color:var(--white);border-bottom-color:var(--purple)}
+.tag{font-size:9px;border:1px solid var(--line);color:var(--purple);padding:3px 10px;letter-spacing:0.06em;border-radius:1px;background:rgba(124,106,247,0.06)}
+.proj-arrow{position:absolute;top:2rem;right:2rem;font-size:14px;color:var(--line);transition:color 0.3s,transform 0.3s}
+.proj-card:hover .proj-arrow{color:var(--purple);transform:translate(3px,-3px)}
+
+/* QUOTE STRIP */
+.quote-strip{padding:3.5rem 2.5rem;border-bottom:1px solid var(--line);background:var(--deep);display:grid;grid-template-columns:auto 1fr;gap:3rem;align-items:center}
+.q-mark{font-family:'Playfair Display',serif;font-size:5rem;font-weight:700;color:var(--purple3);line-height:0.8;margin-top:-0.5rem}
+.q-text{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1rem,2.5vw,1.5rem);color:var(--light);line-height:1.6}
+.q-text em{color:var(--purple2);font-style:normal}
+
+/* CONTACT */
+.contact-section{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--line)}
+.ct-left{padding:2.5rem;border-right:1px solid var(--line)}
+.ct-right{padding:2.5rem;display:flex;flex-direction:column;gap:1px;background:var(--line)}
+.ct-item{background:var(--black);padding:1.25rem 1.5rem;display:flex;justify-content:space-between;align-items:center;transition:background 0.2s;cursor:pointer}
+.ct-item:hover{background:var(--deep)}
+.ct-label{font-size:9px;color:var(--mute);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:4px}
+.ct-val{font-size:12px;color:var(--purple2);text-decoration:none;transition:color 0.2s}
+.ct-val:hover{color:var(--purple2)}
+.ct-arrow{font-size:14px;color:var(--mute);transition:color 0.2s}
+.ct-item:hover .ct-arrow{color:var(--purple)}
+.big-cta{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,5vw,3rem);font-weight:800;color:var(--white);line-height:1.1;margin-bottom:1.5rem;letter-spacing:-0.02em}
+.big-cta em{color:var(--purple);font-style:normal}
+
+/* FOOTER */
+.footer{padding:1.25rem 2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.f-copy{font-size:10px;color:var(--mute);letter-spacing:0.06em}
+.f-links{display:flex;gap:1.5rem}
+.f-lnk{font-size:10px;color:var(--mute);text-decoration:none;letter-spacing:0.08em;transition:color 0.2s}
+.f-lnk:hover{color:var(--purple)}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  .hero-content{padding:2.5rem 1.25rem 2.5rem}
+  .hero-corner{display:none}
+  .hero-btns{flex-direction:column}
+  .hbtn-main,.hbtn-ghost{width:100%;text-align:center}
+  .about-bar{grid-template-columns:1fr 1fr}
+  .ab-cell:nth-child(2){border-right:none}
+  .ab-cell:nth-child(3){border-top:1px solid var(--line)}
+  .ab-cell:nth-child(4){border-right:none;border-top:1px solid var(--line)}
+  .mid-grid{grid-template-columns:1fr}
+  .mg-left{border-right:none;border-bottom:1px solid var(--line);padding:2rem 1.25rem}
+  .mg-right{padding:2rem 1.25rem}
+  .proj-grid{grid-template-columns:1fr}
+  .proj-card{border-right:none !important;padding:1.75rem 1.25rem}
+  .proj-card:nth-last-child(-n+2){border-bottom:1px solid var(--line) !important}
+  .proj-card:last-child{border-bottom:none !important}
+  .quote-strip{grid-template-columns:1fr;gap:1rem;padding:2.5rem 1.25rem}
+  .q-mark{display:none}
+  .contact-section{grid-template-columns:1fr}
+  .ct-left{border-right:none;border-bottom:1px solid var(--line);padding:2rem 1.25rem}
+  .ct-right{padding:0}
+  .footer{padding:1rem 1.25rem}
+  .lang-bar{padding:10px 1.25rem}
+  .proj-header{padding:1.5rem 1.25rem}
+}
+@media(min-width:601px) and (max-width:900px){
+  .about-bar{grid-template-columns:1fr 1fr}
+  .ab-cell:nth-child(2){border-right:none}
+  .ab-cell:nth-child(3){border-top:1px solid var(--line)}
+  .ab-cell:nth-child(4){border-right:none;border-top:1px solid var(--line)}
+  .mid-grid{grid-template-columns:1fr}
+  .mg-left{border-right:none;border-bottom:1px solid var(--line)}
+  .contact-section{grid-template-columns:1fr}
+  .ct-left{border-right:none;border-bottom:1px solid var(--line)}
+  .ct-right{padding:0}
+}
+</style>
+<div class="pf">
+<!-- LANG BAR -->
+<div class="lang-bar">
+<span class="lang-logo">Boldowen.DEV</span>
+<div class="lang-btns">
+<button class="lb on" id="lb-mn" onclick="setLang('mn')">MN</button>
+<span class="lang-sep">/</span>
+<button class="lb" id="lb-en" onclick="setLang('en')">EN</button>
+</div>
+</div>
+<!-- HERO -->
+<section class="hero">
+<canvas class="hero-canvas" id="cvs"></canvas>
+<div class="hero-content">
+<div class="status-pill">
+<span class="pulse"></span>
+<span data-en="Open to work — 2026" data-mn="Ажлын байр хайж байна — 2026"></span>
+</div>
+<div class="hero-name"><span data-en="BOLDBAYAR" data-mn="ЁНДОН">ЁНДОН</span><br/><span class="stroke" data-en="YOONDON" data-mn="БОЛДБАЯР">БОЛДБАЯР</span></div>
+<div class="hero-subtitle" data-en="CS Student &amp; AI Developer" data-mn="CS оюутан &amp; AI хөгжүүлэгч"></div>
+<div class="hero-desc">
+<span style="color:var(--mute)">$ </span><span data-en="Focus: " data-mn="Чиглэл: "></span><span data-en="AI/ML systems · Data · Algorithms" data-mn="AI/ML систем · Өгөгдөл · Алгоритм"></span><br/>
+<span style="color:var(--mute)">$ </span><span data-en="NUM · Computer Science · GPA 3.3" data-mn="МУИС · Компьютерын ухаан · 3.3 голч"></span><br/>
+<span style="color:var(--mute)">$ </span><span data-en="Ulaanbaatar · open to internship/part-time" data-mn="Улаанбаатар · дадлага/цагийн ажилд нээлттэй"></span>
+</div>
+<div class="hero-btns">
+<button class="hbtn-main" data-en="Download HTML ↗" data-mn="HTML файлаар татах ↗" onclick="downloadPortfolio()"></button>
+<a class="hbtn-ghost" data-en="yoboldo59@gmail.com" data-mn="yoboldo59@gmail.com" href="mailto:yoboldo59@gmail.com"></a>
+</div>
+</div>
+<div class="hero-corner">47.8864° N · 106.9057° E<br/>UTC+08:00 · MN</div>
+</section>
+<!-- MARQUEE -->
+<div class="marquee">
+<div class="mq-inner">
+<span class="mq-item"><span class="mq-dot"></span>Python</span>
+<span class="mq-item"><span class="mq-dot"></span>C# / C++</span>
+<span class="mq-item"><span class="mq-dot"></span>Java</span>
+<span class="mq-item"><span class="mq-dot"></span>SQL</span>
+<span class="mq-item"><span class="mq-dot"></span>Generative AI</span>
+<span class="mq-item"><span class="mq-dot"></span>Figma</span>
+<span class="mq-item"><span class="mq-dot"></span>HTML / CSS</span>
+<span class="mq-item"><span class="mq-dot"></span>GitHub</span>
+<span class="mq-item"><span class="mq-dot"></span>Linux</span>
+<span class="mq-item"><span class="mq-dot"></span>Android Studio</span>
+<span class="mq-item"><span class="mq-dot"></span>Python</span>
+<span class="mq-item"><span class="mq-dot"></span>C# / C++</span>
+<span class="mq-item"><span class="mq-dot"></span>Java</span>
+<span class="mq-item"><span class="mq-dot"></span>SQL</span>
+<span class="mq-item"><span class="mq-dot"></span>Generative AI</span>
+<span class="mq-item"><span class="mq-dot"></span>Figma</span>
+<span class="mq-item"><span class="mq-dot"></span>HTML / CSS</span>
+<span class="mq-item"><span class="mq-dot"></span>GitHub</span>
+<span class="mq-item"><span class="mq-dot"></span>Linux</span>
+<span class="mq-item"><span class="mq-dot"></span>Android Studio</span>
+</div>
+</div>
+<!-- STATS -->
+<div class="about-bar">
+<div class="ab-cell">
+<div class="ab-num">3.3</div>
+<div class="ab-lbl" data-en="GPA — NUM" data-mn="МУИС голч"></div>
+</div>
+<div class="ab-cell">
+<div class="ab-num">1st</div>
+<div class="ab-lbl" data-en="Pitch Night 2024" data-mn="Pitch Night 2024"></div>
+</div>
+<div class="ab-cell">
+<div class="ab-num">8+</div>
+<div class="ab-lbl" data-en="technologies used" data-mn="технологи ашигласан"></div>
+</div>
+<div class="ab-cell">
+<div class="ab-num">2026</div>
+<div class="ab-lbl" data-en="internship / part-time" data-mn="дадлага / цагийн ажил"></div>
+</div>
+</div>
+<!-- SKILLS + EXP -->
+<div class="mid-grid">
+<div class="mg-left">
+<p class="sec-label" data-en="core skills" data-mn="үндсэн ур чадвар"></p>
+<div class="skill-row"><div class="sk-top"><span class="sk-name">C# / C++</span><span class="sk-val">78%</span></div><div class="sk-track"><div class="sk-fill" style="width:78%"><span class="sk-glow"></span></div></div></div>
+<div class="skill-row"><div class="sk-top"><span class="sk-name">Generative AI</span><span class="sk-val">76%</span></div><div class="sk-track"><div class="sk-fill" style="width:76%"><span class="sk-glow"></span></div></div></div>
+<div class="skill-row"><div class="sk-top"><span class="sk-name">Python</span><span class="sk-val">82%</span></div><div class="sk-track"><div class="sk-fill" style="width:82%"><span class="sk-glow"></span></div></div></div>
+<div class="skill-row"><div class="sk-top"><span class="sk-name">Java</span><span class="sk-val">74%</span></div><div class="sk-track"><div class="sk-fill" style="width:74%"><span class="sk-glow"></span></div></div></div>
+<div class="skill-row"><div class="sk-top"><span class="sk-name">SQL</span><span class="sk-val">72%</span></div><div class="sk-track"><div class="sk-fill" style="width:72%"><span class="sk-glow"></span></div></div></div>
+<div class="skill-row"><div class="sk-top"><span class="sk-name">Figma</span><span class="sk-val">78%</span></div><div class="sk-track"><div class="sk-fill" style="width:78%"><span class="sk-glow"></span></div></div></div>
+<div class="skill-row"><div class="sk-top"><span class="sk-name">HTML / CSS</span><span class="sk-val">80%</span></div><div class="sk-track"><div class="sk-fill" style="width:80%"><span class="sk-glow"></span></div></div></div>
+<div class="skill-row"><div class="sk-top"><span class="sk-name">Android Studio</span><span class="sk-val">70%</span></div><div class="sk-track"><div class="sk-fill" style="width:70%"><span class="sk-glow"></span></div></div></div>
+</div>
+<div class="mg-right">
+<p class="sec-label" data-en="experience &amp; education" data-mn="туршлага &amp; боловсрол"></p>
+<div class="exp-item">
+<div class="exp-header">
+<div>
+<div class="exp-co" data-en="National University of Mongolia" data-mn="Монгол Улсын Их Сургууль"></div>
+<div class="exp-role" data-en="B.Sc. Computer Science" data-mn="Бакалавр · Компьютерын ухаан"></div>
+<div class="exp-note">GPA 3.3</div>
+</div>
+<div class="exp-yr">2023 —<br/><span data-en="now" data-mn="одоо"></span></div>
+</div>
+</div>
+<div class="exp-item">
+<div class="exp-header">
+<div>
+<div class="exp-co">Tavan Bogd Foods</div>
+<div class="exp-role" data-en="Branch Staff" data-mn="Салбарын ажилтан"></div>
+<div class="exp-note" data-en="Customer service, scheduling, and coordination for a 4-member team" data-mn="Үйлчилгээ, цагийн зохион байгуулалт, 4 хүний багийн координац"></div>
+</div>
+<div class="exp-yr">2024.09<br/>2025.01</div>
+</div>
+</div>
+<div class="exp-item">
+<div class="exp-header">
+<div>
+<div class="exp-co" data-en="Arts Bogd LLC" data-mn="Арц Богд ХХК"></div>
+<div class="exp-role" data-en="Receptionist" data-mn="Ресепшн"></div>
+</div>
+<div class="exp-yr">2024.07<br/>2024.08</div>
+</div>
+</div>
+<div class="exp-item" style="margin-bottom:0;padding-bottom:0;border-bottom:none">
+<div class="exp-header">
+<div>
+<div class="exp-co">Cisco NetAcad</div>
+<div class="exp-role">Linux Unhatched</div>
+<div class="exp-note" data-en="Certification" data-mn="Сертификат"></div>
+</div>
+<div class="exp-yr">2025</div>
+</div>
+</div>
+<div class="award">
+<div class="award-icon">🏆</div>
+<div class="award-txt" data-en="Pitch Night Competition — 1st Place · 2024" data-mn="Pitch Night уралдаан — 1-р байр · 2024"></div>
+</div>
+</div>
+</div>
+<!-- PROJECTS -->
+<div class="proj-section">
+<div class="proj-header">
+<p class="sec-label" data-en="selected projects" data-mn="сонгосон төслүүд" style="margin-bottom:0"></p>
+<span data-en="4 projects" data-mn="4 төсөл" style="font-size:10px;color:var(--mute)"></span>
+</div>
+<div class="proj-grid">
+<a class="proj-card" href="https://boldowen.github.io/Hangman/" rel="noopener noreferrer" target="_blank">
+<div class="proj-arrow">↗</div>
+<div class="proj-num">01</div>
+<div class="proj-title" data-mn="Hangman Web Тоглоом" data-en="Hangman Web Game">Hangman Web Тоглоом</div>
+<div class="proj-body" data-mn="Хичээлийн хүрээнд хэрэгжүүлсэн үг таах Hangman тоглоом. Web дээр шууд ажилладаг, энгийн UI болон тоглоомын үндсэн logic-той." data-en="A browser-based word guessing Hangman game built as a coursework project. It runs directly on the web with a simple UI and core game logic.">Хичээлийн хүрээнд хэрэгжүүлсэн үг таах Hangman тоглоом. Web дээр шууд ажилладаг, энгийн UI болон тоглоомын үндсэн logic-той.</div>
+<ul class="proj-proof"><li data-mn="Үсэг сонгох, оноо/алдаа тооцох logic хэрэгжүүлсэн" data-en="Implemented letter selection and mistake/game-state logic">Үсэг сонгох, оноо/алдаа тооцох logic хэрэгжүүлсэн</li><li data-mn="GitHub Pages дээр live demo байдлаар байршуулсан" data-en="Deployed as a live demo on GitHub Pages">GitHub Pages дээр live demo байдлаар байршуулсан</li></ul>
+<div class="proj-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span></div><span class="github-link" data-mn="Live demo үзэх ↗" data-en="View live demo ↗">Live demo үзэх ↗</span>
+</a>
+<a class="proj-card" href="https://github.com/Boldowen/Bioforamtic_OCR" rel="noopener noreferrer" target="_blank">
+<div class="proj-arrow">↗</div>
+<div class="proj-num">02</div>
+<div class="proj-title" data-mn="PeptideMinerAdvanced" data-en="PeptideMinerAdvanced">PeptideMinerAdvanced</div>
+<div class="proj-body" data-mn="Bioinformatics чиглэлээр хийсэн Python text mining tool. PubMed abstract-уудаас self-assembling peptide sequence, structure, nanostructure болон туршилтын нөхцөлийг автоматаар илрүүлдэг." data-en="A Python bioinformatics text-mining tool that extracts self-assembling peptide sequences, structures, nanostructures, and experimental conditions from PubMed abstracts.">Bioinformatics чиглэлээр хийсэн Python text mining tool. PubMed abstract-уудаас self-assembling peptide sequence, structure, nanostructure болон туршилтын нөхцөлийг автоматаар илрүүлдэг.</div>
+<ul class="proj-proof"><li data-mn="PubMed E-utilities API ашиглан PMID, title, abstract татдаг" data-en="Uses PubMed E-utilities API to fetch PMIDs, titles, and abstracts">PubMed E-utilities API ашиглан PMID, title, abstract татдаг</li><li data-mn="SpaCy NLP, regex, XML parsing ашиглан үр дүнг CSV-д хадгалдаг" data-en="Uses SpaCy NLP, regex, and XML parsing, then saves results to CSV">SpaCy NLP, regex, XML parsing ашиглан үр дүнг CSV-д хадгалдаг</li></ul>
+<div class="proj-tags"><span class="tag">Python</span><span class="tag">SpaCy</span><span class="tag">PubMed API</span><span class="tag">Regex</span></div><span class="github-link" data-mn="Project үзэх ↗" data-en="View project ↗">Project үзэх ↗</span>
+</a>
+<a class="proj-card" href="https://github.com/Boldowen/Mini_pygame" rel="noopener noreferrer" target="_blank">
+<div class="proj-arrow">↗</div>
+<div class="proj-num">03</div>
+<div class="proj-title" data-mn="Graph Algorithm Visualizer" data-en="Graph Algorithm Visualizer">Graph Algorithm Visualizer</div>
+<div class="proj-body" data-mn="Pygame ашиглан Kruskal, BFS, DFS алгоритмуудыг нэг граф дээр visual хэлбэрээр туршиж харуулдаг алгоритмын төсөл." data-en="An algorithm visualization project built with Pygame to demonstrate Kruskal, BFS, and DFS on the same graph.">Pygame ашиглан Kruskal, BFS, DFS алгоритмуудыг нэг граф дээр visual хэлбэрээр туршиж харуулдаг алгоритмын төсөл.</div>
+<ul class="proj-proof"><li data-mn="Графын хайлт болон spanning tree алгоритмуудыг харьцуулж үзүүлдэг" data-en="Visualizes graph traversal and spanning-tree algorithms">Графын хайлт болон spanning tree алгоритмуудыг харьцуулж үзүүлдэг</li><li data-mn="Алгоритмын алхам, графын өөрчлөлтийг ойлгомжтой дүрсэлсэн" data-en="Shows algorithm steps and graph changes clearly">Алгоритмын алхам, графын өөрчлөлтийг ойлгомжтой дүрсэлсэн</li></ul>
+<div class="proj-tags"><span class="tag">Python</span><span class="tag">Pygame</span><span class="tag">BFS/DFS</span><span class="tag">Kruskal</span></div><span class="github-link" data-mn="Live demo үзэх ↗" data-en="View live demo ↗">Live demo үзэх ↗</span>
+</a>
+<a class="proj-card" href="https://github.com/Boldowen/TaskManager" rel="noopener noreferrer" target="_blank">
+<div class="proj-arrow">↗</div>
+<div class="proj-num">04</div>
+<div class="proj-title" data-mn="Task Manager App" data-en="Task Manager App">Task Manager App</div>
+<div class="proj-body" data-mn="Даалгавар нэмэх, жагсаах, completed checkbox ашиглан дууссаныг тэмдэглэх боломжтой task management төсөл." data-en="A task management project with create, list, and completed-checkbox interactions for marking tasks as done.">Даалгавар нэмэх, жагсаах, completed checkbox ашиглан дууссаныг тэмдэглэх боломжтой task management төсөл.</div>
+<ul class="proj-proof"><li data-mn="Task нэмэх, устгах, completed төлөв удирдах UI flow-той" data-en="Includes UI flow for adding, deleting, and completing tasks">Task нэмэх, устгах, completed төлөв удирдах UI flow-той</li><li data-mn="Хэрэглэгчийн үйлдэл бүр ойлгомжтой байхыг зорьсон" data-en="Designed interactions to be simple and easy to follow">Хэрэглэгчийн үйлдэл бүр ойлгомжтой байхыг зорьсон</li></ul>
+<div class="proj-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">UI</span></div><span class="github-link" data-mn="Live demo үзэх ↗" data-en="View live demo ↗">Live demo үзэх ↗</span>
+</a>
+</div></div>
+</div>
+<!-- QUOTE -->
+<div class="quote-strip">
+<div class="q-mark">"</div>
+<div class="q-text" data-en='"I am a CS student building practical projects across &lt;em&gt;AI/ML, algorithms, bioinformatics, and web apps&lt;/em&gt;."' data-mn='"Би &lt;em&gt;AI/ML, алгоритм, bioinformatics, web app&lt;/em&gt; чиглэлээр бодит төсөл хийж хөгжиж буй CS оюутан."'></div>
+</div>
+<!-- CONTACT -->
+<div class="contact-section">
+<div class="ct-left">
+<div class="big-cta" data-en="Let's build&lt;br&gt;&lt;em&gt;something great.&lt;/em&gt;" data-mn="Хамтдаа&lt;br&gt;&lt;em&gt;ирээдүйг бүтээе.&lt;/em&gt;"></div>
+<p data-en="Open to internships, part-time roles, and AI/backend collaboration." data-mn="Дадлага, цагийн ажил болон AI/backend чиглэлийн хамтын төсөлд нээлттэй." style="font-size:11px;color:var(--dim);line-height:1.9"></p>
+</div>
+<div class="ct-right"> · 9932-3213
+<div class="ct-item">
+<div><div class="ct-label" data-en="email" data-mn="и-мэйл"></div><a class="ct-val" href="mailto:yoboldo59@gmail.com">yoboldo59@gmail.com</a></div>
+<span class="ct-arrow">↗</span>
+</div>
+<div class="ct-item">
+<div><div class="ct-label">Facebook</div><a class="ct-val" href="https://www.facebook.com/boldowen" rel="noopener" target="_blank">boldowen</a></div>
+<span class="ct-arrow">↗</span>
+</div><div class="ct-item"><div><div class="ct-label">GitHub</div><a class="ct-val" href="https://github.com/boldowen" rel="noopener noreferrer" target="_blank">github.com/boldowen</a></div><span class="ct-arrow">↗</span></div>
+<div class="ct-item">
+<div><div class="ct-label" data-en="phone" data-mn="утас"></div><span class="ct-val">+976 8526-7624</span></div>
+<span class="ct-arrow">↗</span>
+</div>
+<div class="ct-item">
+<div><div class="ct-label" data-en="location" data-mn="байршил"></div><span class="ct-val" data-en="Sukhbaatar District, UB" data-mn="Сүхбаатар дүүрэг, УБ"></span></div>
+<span class="ct-arrow">↗</span>
+</div>
+</div>
+</div>
+<div class="footer">
+<span class="f-copy" data-en="© 2026 · Boldbayar Yoondon · All systems operational" data-mn="© 2026 · Ёндон Болдбаяр · Бүх систем ажиллаж байна"></span>
+<div class="f-links">
+<a class="f-lnk" href="https://github.com/boldowen" rel="noopener noreferrer" target="_blank">GitHub</a>
+<a class="f-lnk" href="https://www.facebook.com/boldowen" rel="noopener" target="_blank">Facebook</a>
+<a class="f-lnk" href="mailto:yoboldo59@gmail.com">Email</a>
+</div>
+</div>
+</div>
+<script>
+// CANVAS HERO background
+const canvas = document.getElementById('cvs');
+function drawBg(){
+  const W = canvas.offsetWidth, H = canvas.offsetHeight;
+  canvas.width = W; canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0,0,W,H);
+  // grid
+  ctx.strokeStyle = 'rgba(28,28,58,0.7)';
+  ctx.lineWidth = 0.5;
+  const step = 48;
+  for(let x=0;x<W;x+=step){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}
+  for(let y=0;y<H;y+=step){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+  // glow orb
+  const g = ctx.createRadialGradient(W*0.85,H*0.1,0,W*0.85,H*0.1,W*0.5);
+  g.addColorStop(0,'rgba(45,27,105,0.5)');
+  g.addColorStop(0.5,'rgba(45,27,105,0.15)');
+  g.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0,0,W,H);
+  // second orb bottom left
+  const g2 = ctx.createRadialGradient(0,H,0,0,H,W*0.4);
+  g2.addColorStop(0,'rgba(124,106,247,0.12)');
+  g2.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle = g2;
+  ctx.fillRect(0,0,W,H);
+  // diagonal lines
+  ctx.strokeStyle = 'rgba(124,106,247,0.04)';
+  ctx.lineWidth = 1;
+  for(let i=-H;i<W+H;i+=80){
+    ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i+H,H);ctx.stroke();
+  }
+}
+setTimeout(drawBg, 50);
+window.addEventListener('resize', drawBg);
+
+
+// DOWNLOAD current portfolio as standalone HTML
+function downloadPortfolio(){
+  const source = '<!doctype html>\n<html lang="mn">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>Boldbayar Yoondon Portfolio</title>\n</head>\n<body>\n' + document.querySelector('style').outerHTML + '\n' + document.querySelector('.pf').outerHTML + '\n' + document.querySelector('script').outerHTML + '\n</body>\n</html>';
+  const blob = new Blob([source], {type:'text/html;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'boldbayar_yoondon_portfolio.html';
+  document.body.appendChild(a);
+  a.click();
+  URL.revokeObjectURL(a.href);
+  a.remove();
+}
+
+// LANG SWITCH
+function setLang(lang){
+  document.querySelectorAll('[data-mn],[data-en]').forEach(el=>{
+    const v = el.getAttribute('data-'+lang);
+    if(v===null) return;
+    if(el.tagName==='BUTTON'){el.textContent=v;return}
+    if(v.includes('<em>')||v.includes('<br>')){el.innerHTML=v;return}
+    el.textContent=v;
+  });
+  document.getElementById('lb-mn').classList.toggle('on',lang==='mn');
+  document.getElementById('lb-en').classList.toggle('on',lang==='en');
+}
+setLang('mn');
+</script>
